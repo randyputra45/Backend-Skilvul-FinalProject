@@ -9,7 +9,8 @@ const authRoutes = require("./routes/auth.route");
 const blogRoutes = require("./routes/blog.route");
 const categoryRoutes = require("./routes/category.route");
 const psikologRoutes = require("./routes/psikolog.route");
-const userRoutes = require("./routes/user.route")
+const userRoutes = require("./routes/user.route");
+const consultationRoutes = require("./routes/consultation.route");
 const db = require("./helpers/db");
 
 const port = process.env.PORT || 3000;
@@ -41,6 +42,7 @@ async function main() {
     app.use(blogRoutes);
     app.use(categoryRoutes);
     app.use(psikologRoutes);
+    app.use(consultationRoutes);
 
     // upload image route
     app.post("/upload", upload.single("file"), (req, res) => {
