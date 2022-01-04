@@ -1,77 +1,202 @@
-const AuthModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
-const jwt = require('jsonwebtoken');
+const crypto = require("crypto");
+const ErrorResponse = require("../utils/errorResponse");
+const emailConfirmation = require('../utils/emailMessage');
 
 class AuthController {
-  static async postRegister(req, res) {
+  static async postRegister(req, res, next) {
     // get `email, password` from req body
     // hash password
     // create a new user object
     // save to db
-    const { first_name, last_name, no_telp, email, password } = req.body;
-
+    const { email } = req.body
     try {
-      const salt = await bcrypt.genSalt(10);
-      const hashesPassword = await bcrypt.hash(
-        password,
-        salt
-      );
-      const user = new AuthModel({
-        first_name: first_name,
-        last_name: last_name,
-        no_telp: no_telp,
-        email: email, 
-        password: hashesPassword,
-      });
+      const existingUser = await UserModel.findOne({email});
+      if (existingUser) {
+        return res.status(409).send({ 
+          message: "Email is already in use."
+        });
+      }
 
-      const saved = await user.save();
-      res.status(201).send(saved);
+      const user = await UserModel.create(req.body);
+      const verifyToken = user.getSignedJwtToken();  
+      const verifyUrl = `http://localhost:3000/verify/${verifyToken}`
+
+      const emailMessage = {
+        subject: "Verify your GoCure email address",
+        title: "Activate Account",
+        text: `Hey ${user.first_name}, we have received your account registration. Activate your account now by clicking on the button below. This link will expire in 7 days.`,
+        buttonMessage: "Click the button below to activate your account"
+      }
+
+      try {
+        res.json(await emailConfirmation.sendEmail(req.body, emailMessage, verifyUrl));
+      } catch (err) {
+        return next(new ErrorResponse("Email could not be sent", 500));
+      }
     } catch (error) {
-      res.status(500);
-      console.log(error);
+      next(error)
     }
   }
 
-  static async postLogin(req, res) {
+  static async getVerify(req, res, next) {
+    const { verifyToken } = req.params
+    // Check we have an id
+    if (!verifyToken) {
+      return res.status(422).send({ 
+        message: "Missing Token"
+      });
+    }
+
+    // Step 1 -  Verify the token from the URL
+    let payload = null
+    try {
+      payload = jwt.verify(
+        verifyToken,
+        process.env.JWT_SECRET
+      );
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+
+    try{
+      // Step 2 - Find user with matching ID
+      const user = await UserModel.findOne({ _id: payload.id });
+      if (!user) {
+        return res.status(404).send({ 
+          message: "User does not  exists" 
+        });
+      }
+      // Step 3 - Update user verification status to true
+      await UserModel.updateOne(
+        { email: user.email },
+        { verified: true }
+      );
+      return res.status(200).send({
+        message: "Account Verified"
+      });
+    } catch (err) {
+      console.log("Error bos")
+      next(err)
+    }
+  }
+
+  static async postLogin(req, res, next) {
     // get `email, password` from req body
     // search email in db
     // if find compare the password
     // if matched user logged in
     const { email, password } = req.body;
 
+    if(!email || !password) {
+      if(!email) {
+        return next(new ErrorResponse("Please provide an email", 400))
+      } else {
+        return next(new ErrorResponse("Please provide an password", 400))
+      }
+    }
+
     try {
       const user = await UserModel.findOne({
         email: email,
       });
+
+      // Check is user exist
       if (user) {
+        // Check if user verified
+        if(!user.verified){
+          return res.status(403).send({ 
+            message: "Verify your Account." 
+          });
+        }
+        // Check is password match
         const auth = await bcrypt.compare(
           password,
           user.password
         );
+        // Send jwt token if password match
         if (auth) {
-          const accessToken = jwt.sign({ username: user.username,  role: user.role }, process.env.SECRET_TOKEN);
-          res.json({
-            message: "Login success",
-            accessToken: accessToken
-          });
+          sendToken(user, 200, res);
         } else {
-          res.json({
-            message: "Incorrect password",
-          });
-          throw Error("Incorrect password");
+          return next(new ErrorResponse("Incorrect Password"),401)
         }
       } else {
-        res.json({
-          message: "Incorrect email",
-        });
-        throw Error("Incorrect email");
+        return next(new ErrorResponse("Incorrect Email"),401)
+      }
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async postForgotPassword(req, res, next) {
+    const { email } = req.body
+
+    try {
+      const user = await UserModel.findOne({email});
+
+      if (!user) {
+        return next(new ErrorResponse("Email cound not be sent", 404))
+      }
+
+      const resetToken = user.getResetPasswordToken()
+      await user.save();
+
+      const resetUrl = `http://localhost:4000/passwordreset/${resetToken}`;
+      const emailMessage = {
+        subject: "We received a request to reset your password",
+        title: "Reset Password",
+        text: `Hey ${user.first_name}, we have received your password reset request. Use the link below to set up a new password for your account. This link will expire in 7 days.`,
+        buttonMessage: "Click the button below to reset your password"
+      }
+
+      try {
+        res.json(await emailConfirmation.sendEmail(req.body, emailMessage, resetUrl));
+      } catch (err) {
+        console.log(err);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save();
+        return next(new ErrorResponse("Email could not be sent", 500));
       }
     } catch (error) {
-      res.status(500);
-      console.log(error);
+      next(error)
+    }
+  }
+
+  static async putResetPassword(req, res, next) {
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.resetToken).digest("hex");
+
+    try {
+      const user = await UserModel.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() }
+      })
+
+      if(!user){
+        return next(new ErrorResponse("Invalid Reset Token", 400))
+      }
+
+      user.password = req.body.password;
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+
+      // resave the new password
+      await user.save()
+      res.status(201).json({
+        success: true,
+        data: "Password Reset Success"
+      })
+    } catch (error) {
+      next(error)
     }
   }
 }
+
+const sendToken = (user, statusCode, res) => {
+  const token = user.getSignedJwtToken();
+  res.status(statusCode).json({ success: true, token });
+};
 
 module.exports = AuthController;
