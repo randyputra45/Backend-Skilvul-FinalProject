@@ -16,6 +16,14 @@ function getEmailHtml(emailMessage, url) {
       * {
         box-sizing: border-box;
       }
+
+      @media (prefers-color-scheme: light) {
+        .light-scheme { background-color: white; }
+      }
+      
+      @media (prefers-color-scheme: dark) {
+        .day.dark-scheme   { color: black; }
+      }
   
       body {
         margin: 0;
@@ -49,7 +57,7 @@ function getEmailHtml(emailMessage, url) {
     </style>
   </head>
   
-  <body style="background-color: #000000; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+  <body class="light-scheme" style="background-color: #000000; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
     <table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #000000;">
       <tbody>
         <tr>
@@ -81,7 +89,7 @@ function getEmailHtml(emailMessage, url) {
               <tbody>
                 <tr>
                   <td>
-                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #86ffcc; background-image: url('https://d1oco4z2z1fhwp.cloudfront.net/templates/default/2971/bg-white-rombo.png'); background-repeat: no-repeat; color: #000000; width: 650px;" width="650">
+                    <table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #86ffcc; background-image: ; background-repeat: no-repeat; color: #000000; width: 650px;" width="650">
                       <tbody>
                         <tr>
                           <td class="column" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 45px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
@@ -108,7 +116,7 @@ function getEmailHtml(emailMessage, url) {
                             <table class="heading_block" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
                               <tr>
                                 <td style="padding-bottom:30px;padding-top:30px;text-align:center;width:100%;">
-                                  <h1 style="margin: 0; color: #292929; direction: ltr; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 28px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>${emailMessage.title}</strong></h1>
+                                  <h1 class="day dark-scheme" style="margin: 0; color: #292929; direction: ltr; font-family: 'Cabin', Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 28px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>${emailMessage.title}</strong></h1>
                                 </td>
                               </tr>
                             </table>

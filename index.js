@@ -1,10 +1,11 @@
 const dotenv = require("dotenv");
 const multer = require("multer");
-const path = require("path");
+const cors = require("cors");
 dotenv.config();
 
 const express = require("express");
 const errorHandler = require("./middleware/error");
+const db = require("./helpers/db");
 
 const authRoutes = require("./routes/auth.route");
 const blogRoutes = require("./routes/blog.route");
@@ -12,7 +13,6 @@ const categoryRoutes = require("./routes/category.route");
 const psikologRoutes = require("./routes/psikolog.route");
 const userRoutes = require("./routes/user.route");
 const consultationRoutes = require("./routes/consultation.route");
-const db = require("./helpers/db");
 
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGO_URI;
@@ -23,6 +23,7 @@ async function main() {
     await db.openDBConnection(uri);
     const app = express();
 
+    app.use(cors({ credentials: true }));
     app.use(express.json()); // agar kita bisa ambil request body json
 
     app.use(psikologRoutes);

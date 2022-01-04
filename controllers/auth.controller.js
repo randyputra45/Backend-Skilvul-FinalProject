@@ -143,7 +143,7 @@ class AuthController {
       const resetToken = user.getResetPasswordToken()
       await user.save();
 
-      const resetUrl = `http://localhost:4000/passwordreset/${resetToken}`;
+      const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
       const emailMessage = {
         subject: "We received a request to reset your password",
         title: "Reset Password",
