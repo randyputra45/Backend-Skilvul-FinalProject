@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 
 const AuthController = require("../controllers/auth.controller");
 
@@ -7,10 +8,10 @@ const router = express.Router();
 
 // router
 
-router.post('/register', AuthController.postRegister);
-router.get('/verify/:verifyToken', AuthController.getVerify);
-router.post('/login', AuthController.postLogin);
-router.post('/forgotpassword', AuthController.postForgotPassword);
-router.put('/passwordreset/:resetToken', AuthController.putResetPassword);
+router.post('/register', cors(), AuthController.postRegister);
+router.get('/verify/:verifyToken', cors(), AuthController.getVerify);
+router.post('/login', cors(), AuthController.postLogin);
+router.post('/forgotpassword', cors(), AuthController.postForgotPassword);
+router.put('/passwordreset/:resetToken', cors(), AuthController.putResetPassword);
 
 module.exports = router;
