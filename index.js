@@ -1,9 +1,9 @@
 const dotenv = require("dotenv");
-const multer = require("multer");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
+const express = require("express");
 dotenv.config();
 
-const express = require("express");
 const errorHandler = require("./middleware/error");
 const db = require("./helpers/db");
 
@@ -13,6 +13,7 @@ const categoryRoutes = require("./routes/category.route");
 const psikologRoutes = require("./routes/psikolog.route");
 const userRoutes = require("./routes/user.route");
 const consultationRoutes = require("./routes/consultation.route");
+const webinarRoutes = require("./routes/webinar.route");
 
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGO_URI;
@@ -23,6 +24,7 @@ async function main() {
     await db.openDBConnection(uri);
     const app = express();
 
+    app.use(cookieParser());
     app.use(cors({ credentials: true }));
     app.use(express.json()); // agar kita bisa ambil request body json
 
@@ -33,6 +35,7 @@ async function main() {
     app.use(categoryRoutes);
     app.use(psikologRoutes);
     app.use(consultationRoutes);
+    app.use(webinarRoutes);
 
     app.use(errorHandler);
 
