@@ -4,6 +4,7 @@ const UserModel = require("../models/user.model");
 const crypto = require("crypto");
 const ErrorResponse = require("../utils/errorResponse");
 const emailConfirmation = require('../utils/emailMessage');
+const { promisify } = require('util');
 
 class AuthController {
   static async postRegister(req, res, next) {
@@ -118,7 +119,7 @@ class AuthController {
         );
         // Send jwt token if password match
         if (auth) {
-          sendToken(user, 200, res);
+          sendToken(user, 200, req, res);
         } else {
           return next(new ErrorResponse("Incorrect Password"),401)
         }
@@ -128,6 +129,24 @@ class AuthController {
     } catch (err) {
       next(err)
     }
+  }
+
+  static async getCurrentUser(req, res, next) {
+    let currentUser;
+    try {
+      // check if there is an jwt that stored at client cookie
+      if(req.cookies.jwt){
+        const token = req.cookies.jwt;
+        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        currentUser = await UserModel.findById(decoded.id);
+      } else {
+        currentUser = null;
+      }
+    } catch (error) {
+      next(error);
+    }
+    // send logged user data
+    res.status(200).send({ currentUser });
   }
 
   static async postForgotPassword(req, res, next) {
@@ -192,11 +211,46 @@ class AuthController {
       next(error)
     }
   }
+
+  static async getLogout(req, res, next) {
+    try {
+      res.cookies("jwt", "loggedOut", {
+        expires: new Date(Date.now() + 1 * 1000),
+        httpOnly: true
+      })
+      req.status(200).json({
+        success: true,
+        message: "User is logged out"
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
-const sendToken = (user, statusCode, res) => {
+const sendToken = (user, statusCode, req, res) => {
   const token = user.getSignedJwtToken();
-  res.status(statusCode).json({ success: true, token });
+
+  //set token expiry to 1 month 
+  let date = new Date();
+  date.setDate(date.getDate() + 30)
+
+  // cookie settings
+  res.cookie('jwt', token, {
+    expires: date,
+    httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https', 
+    sameSite: 'none'
+  });
+
+  user.password = undefined;
+  res.status(statusCode).json({
+    success: true,
+    token,
+    data: {
+      user
+    }
+  })
 };
 
 module.exports = AuthController;
