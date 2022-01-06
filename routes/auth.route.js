@@ -6,14 +6,20 @@ const AuthController = require("../controllers/auth.controller");
 // creates a new router instance
 const router = express.Router();
 
-// router
+// important to set cookie 
+const corsOptions = {
+    origin: true, //included origin as true
+    credentials: true, //included credentials as true
+    exposedHeaders: ["set-cookie"],
+};
 
-router.post('/register', cors(), AuthController.postRegister);
-router.post('/login', cors(), AuthController.postLogin);
-router.get('/verify/:verifyToken', cors(), AuthController.getVerify);
-router.get('/user', cors(), AuthController.getCurrentUser);
-router.post('/forgotpassword', cors(), AuthController.postForgotPassword);
-router.put('/passwordreset/:resetToken', cors(), AuthController.putResetPassword);
-router.get('/logout', cors(), AuthController.getLogout);
+// router
+router.post('/register', cors(corsOptions), AuthController.postRegister);
+router.post('/login', cors(corsOptions), AuthController.postLogin);
+router.get('/verify/:verifyToken', cors(corsOptions), AuthController.getVerify);
+router.get('/user', cors(corsOptions), AuthController.getCurrentUser);
+router.post('/forgotpassword', cors(corsOptions), AuthController.postForgotPassword);
+router.put('/passwordreset/:resetToken', cors(corsOptions), AuthController.putResetPassword);
+router.get('/logout', cors(corsOptions), AuthController.getLogout);
 
 module.exports = router;

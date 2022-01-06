@@ -120,6 +120,7 @@ class AuthController {
         // Send jwt token if password match
         if (auth) {
           sendToken(user, 200, req, res);
+          console.log("Logged")
         } else {
           return next(new ErrorResponse("Incorrect Password"),401)
         }
@@ -127,7 +128,7 @@ class AuthController {
         return next(new ErrorResponse("Incorrect Email"),401)
       }
     } catch (err) {
-      next(err)
+      return next(new ErrorResponse("Account does'nt exist"),401)
     }
   }
 
@@ -236,12 +237,16 @@ const sendToken = (user, statusCode, req, res) => {
   date.setDate(date.getDate() + 30)
 
   // cookie settings
-  res.cookie('jwt', token, {
-    expires: date,
-    httpOnly: true,
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https', 
-    sameSite: 'none'
-  });
+  try {
+    res.cookie('jwt', token, {
+      expires: date,
+      httpOnly: true,
+      // secure: req.secure || req.headers['x-forwarded-proto'] === 'https', 
+      // sameSite: 'none'
+    });
+  } catch (error) {
+    console.log("cookie error")
+  }
 
   user.password = undefined;
   res.status(statusCode).json({
