@@ -18,6 +18,12 @@ const webinarRoutes = require("./routes/webinar.route");
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGO_URI;
 
+const corsOptions = {
+  origin: true, //included origin as true
+  credentials: true, //included credentials as true
+  exposedHeaders: ["set-cookie"],
+};
+
 async function main() {
   try {
     // memastikan database connect baru jalankan app
@@ -25,9 +31,9 @@ async function main() {
     const app = express();
 
     app.use(cookieParser());
-    app.use(cors({ credentials: true }));
+    app.use(cors(corsOptions));
     app.use(express.json()); // agar kita bisa ambil request body json
-
+    
     app.use(psikologRoutes);
     app.use(userRoutes);
     app.use(authRoutes);
