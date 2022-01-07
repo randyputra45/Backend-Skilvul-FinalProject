@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 const cors = require("cors");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const express = require("express");
 dotenv.config();
 
@@ -14,6 +14,8 @@ const psikologRoutes = require("./routes/psikolog.route");
 const userRoutes = require("./routes/user.route");
 const consultationRoutes = require("./routes/consultation.route");
 const webinarRoutes = require("./routes/webinar.route");
+const testRoutes = require("./routes/health-test.route");
+const screeningRoutes = require("./routes/screening.route");
 
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGO_URI;
@@ -33,7 +35,7 @@ async function main() {
     app.use(cookieParser());
     app.use(cors(corsOptions));
     app.use(express.json()); // agar kita bisa ambil request body json
-    
+
     app.use(psikologRoutes);
     app.use(userRoutes);
     app.use(authRoutes);
@@ -42,6 +44,8 @@ async function main() {
     app.use(psikologRoutes);
     app.use(consultationRoutes);
     app.use(webinarRoutes);
+    app.use(testRoutes);
+    app.use(screeningRoutes);
 
     app.use(errorHandler);
 

@@ -1,15 +1,14 @@
-const TestModel = require("../models/test.model");
+const TestModel = require("../models/health-test.model");
 
 class TestController {
   static async createNewTest(req, res) {
     try {
-      const NewTest = new TestModel(req, body);
+      const NewTest = new TestModel(req.body);
       const saved = await NewTest.save();
       res.status(201).json({
         message: "New Test added",
         test: saved,
       });
-      res.status(201).send(saved);
     } catch (error) {
       res.status(500).send({ err: error });
     }

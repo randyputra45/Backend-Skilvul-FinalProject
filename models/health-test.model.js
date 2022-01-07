@@ -6,10 +6,8 @@ const testSchema = new mongoose.Schema(
       type: String,
     },
     answer: {
-      type: [String],
-      cemas: "tidak pernah",
-      stress: "sering",
-      depresi: "selalu",
+      default: [],
+      type: Array
     },
   },
   { timestamps: true }
