@@ -46,6 +46,7 @@ class AuthController {
     const { verifyToken } = req.params
     // Check we have an id
     if (!verifyToken) {
+      console.log("No Token")
       return res.status(422).send({ 
         message: "Missing Token"
       });
@@ -58,6 +59,7 @@ class AuthController {
         verifyToken,
         process.env.JWT_SECRET
       );
+      console.log(payload)
     } catch (err) {
       return res.status(500).send(err);
     }
@@ -67,7 +69,7 @@ class AuthController {
       const user = await UserModel.findOne({ _id: payload.id });
       if (!user) {
         return res.status(404).send({ 
-          message: "User does not  exists" 
+          message: "User does not exists" 
         });
       }
       // Step 3 - Update user verification status to true
@@ -75,6 +77,7 @@ class AuthController {
         { email: user.email },
         { verified: true }
       );
+      console.log("User verified")
       return res.status(200).send({
         message: "Account Verified"
       });
@@ -215,11 +218,11 @@ class AuthController {
 
   static async getLogout(req, res, next) {
     try {
-      res.cookies("jwt", "loggedOut", {
+      res.cookie("jwt", "loggedOut", {
         expires: new Date(Date.now() + 1 * 1000),
         httpOnly: true
       })
-      req.status(200).json({
+      res.status(200).json({
         success: true,
         message: "User is logged out"
       })
