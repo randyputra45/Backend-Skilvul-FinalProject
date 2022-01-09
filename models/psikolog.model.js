@@ -5,16 +5,16 @@ const psikologSchema = new mongoose.Schema(
         name: {
             type: String,
         },
-        description: {
+        profile: {
             type: String,
-        },
-        photo: {
-            type: String, 
         },
         keahlian: {
             type: [String],
         },
-        testimoni: {
+        keahlian_lain: {
+            type: [String],
+        },
+        pendekatan_terapi: {
             type: [String], 
         }
     },
