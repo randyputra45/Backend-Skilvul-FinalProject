@@ -15,14 +15,23 @@ const webinarSchema = new Schema(
     url_webinar: {
       type: String,
     },
-    psikolog: {
+    psikolog: [{
       type: Schema.Types.ObjectId,
       ref: "Psikolog",
-    },
+    }],
     total_likes: {
       type: Number,
       default: 0,
     },
+    day: {
+      type: String
+    },
+    date: {
+      type: String
+    },
+    price: {
+      type: Number
+    }
   },
   { timestamps:true }
 );
