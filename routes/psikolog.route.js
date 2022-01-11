@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const multer = require("../conf/multer");
 
 const PsikologController = require("../controllers/psikolog.controller");
 
@@ -16,7 +17,7 @@ const corsOptions = {
 router.post("/psikolog", cors(corsOptions), PsikologController.createNewPsikolog);
 router.get("/psikolog", cors(corsOptions), PsikologController.getAllPsikolog);
 router.get("/psikolog/:id", cors(corsOptions), PsikologController.getPsikologByID);
-router.patch("/psikolog/:id", cors(corsOptions), PsikologController.updatePsikolog);
+router.put("/psikolog/:id", multer.single("image"), cors(corsOptions), PsikologController.updatePsikolog);
 router.delete("/psikolog/:id", cors(corsOptions), PsikologController.deletePsikolog);
 
 module.exports = router;

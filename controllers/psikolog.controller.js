@@ -1,5 +1,7 @@
 const PsikologModel = require("../models/psikolog.model");
 
+const cloudinary = require("../conf/cloudinary");
+
 class PsikologController {
   static async createNewPsikolog(req, res) {
     // todo: get `name` from req body
@@ -41,6 +43,8 @@ class PsikologController {
   }
 
   static async updatePsikolog(req, res) {
+    let upload = cloudinary.uploader.upload(req.file.path);
+
     try {
       const id = req.params.id;
       const body = req.body;
@@ -50,17 +54,27 @@ class PsikologController {
       const keahlian_lain = body.keahlian_lain;
       const pendekatan_terapi = body.pendekatan_terapi;
 
-      const psikologList = await PsikologModel.updateOne(
-        { _id: id },
-        { 
-            name: name, 
-            profile: profile,
-            keahlian: keahlian,
-            keahlian_lain: keahlian_lain,
-            pendekatan_terapi: pendekatan_terapi 
+      const psikolog = await PsikologModel.findById(req.params.id);
+
+      upload.then((resultUpload) => {
+        psikolog.image = resultUpload.secure_url;
+        psikolog.cloudinary = resultUpload.public_id;
+      }).then(() => {
+        PsikologModel.updateOne(
+          { _id: id },
+          { 
+              name: name, 
+              profile: profile,
+              keahlian: keahlian,
+              keahlian_lain: keahlian_lain,
+              pendekatan_terapi: pendekatan_terapi,
+              image: psikolog.image,
+              cloudinary: psikolog.cloudinary
+          }
+        );
+        res.status(200).json(psikolog);
         }
-      );
-      res.status(200).send(body);
+      )
     } catch (error) {
       res.status(500).send({ err: error });
     }
