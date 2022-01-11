@@ -16,6 +16,7 @@ const consultationRoutes = require("./routes/consultation.route");
 const webinarRoutes = require("./routes/webinar.route");
 const testRoutes = require("./routes/health-test.route");
 const screeningRoutes = require("./routes/screening.route");
+const paymentRoutes = require("./routes/payment.route");
 
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGO_URI;
@@ -46,6 +47,7 @@ async function main() {
     app.use(webinarRoutes);
     app.use(testRoutes);
     app.use(screeningRoutes);
+    app.use(paymentRoutes);
 
     app.use(errorHandler);
 

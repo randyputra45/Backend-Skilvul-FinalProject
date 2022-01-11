@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema
 
-const consultationSchema = new mongoose.Schema(
+const consultationSchema = new Schema(
   {
     user: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User"
     },
     psikolog: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Psikolog"
     },
     consultation_schedule: {
       type: String,

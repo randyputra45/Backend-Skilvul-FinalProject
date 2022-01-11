@@ -12,10 +12,10 @@ class BlogController {
       upload.then((resultUpload) => {
         const newBlog = new BlogModel();
         newBlog.title = req.body.title;
-        newBlog.desc = req.body.desc;
+        newBlog.content = req.body.content;
         newBlog.author = req.body.author;
         newBlog.categories = req.body.categories;
-        newBlog.blogImage = resultUpload.secure_url;
+        newBlog.image = resultUpload.secure_url;
         newBlog.cloudinary = resultUpload.public_id;
   
         const saved = newBlog.save();
@@ -65,25 +65,36 @@ class BlogController {
 
   // UPDATE
   static async updateBlog(req, res) {
+    let upload = cloudinary.uploader.upload(req.file.path);
+
     try {
+      const id = req.params.id;
+      const title = req.body.title;
+      const content = req.body.content;
+      const categories = req.body.categories;
+      const author = req.body.author;
+
       const post = await BlogModel.findById(req.params.id);
-      if (post.author === req.body.author) {
-        try {
-          const updatedPost =
-            await BlogModel.findByIdAndUpdate(
-              req.params.id,
-              {
-                $set: req.body,
-              },
-              { new: true }
-            );
-          res.status(200).json(updatedPost);
-        } catch (err) {
-          res.status(500).json(err);
+      
+      upload.then((resultUpload) => {
+        post.image = resultUpload.secure_url;
+        post.cloudinary = resultUpload.public_id;
+      }).then(() => {
+        BlogModel.updateOne(
+          { _id: id },
+          { 
+              title: title, 
+              content: content,
+              categories: categories,
+              author: author,
+              image: post.image,
+              cloudinary: post.cloudinary
+          }
+        );
+        res.status(200).json(post);
         }
-      } else {
-        res.status(401).json("can update only your post!");
-      }
+      )
+    
     } catch (err) {
       res.status(500).json(err);
       console.log(err);
