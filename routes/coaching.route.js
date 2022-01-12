@@ -18,6 +18,6 @@ router.post("/coaching", multer.single("image"), cors(), CoachingController.post
 router.get("/coaching", cors(), CoachingController.getAllCoaching);
 router.get("/coaching/:id", cors(), CoachingController.getCoachingByID);
 router.put("/coaching/:id", multer.single("image"), cors(), CoachingController.updateCoaching);
-router.delete("/coaching/:id", protect, CoachingController.deleteCoaching);
+router.delete("/coaching/:id", cors(), CoachingController.deleteCoaching);
 
 module.exports = router;

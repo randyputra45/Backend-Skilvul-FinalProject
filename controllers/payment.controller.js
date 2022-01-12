@@ -5,9 +5,9 @@ class PaymentController {
     static async postNewPayment(req, res, next) {
         // Create Core API instance
         const body = req.body
-        const randomCode = await bcrypt.genSalt(10);
+        const randomCode = await bcrypt.genSalt(5);
+        console.log(randomCode);
         try {
-            const salt = await bcrypt.genSalt(10);
             let core = new midtransClient.CoreApi({
                     isProduction : false,
                     serverKey : process.env.server_key,
