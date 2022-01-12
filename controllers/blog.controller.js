@@ -1,5 +1,5 @@
 const BlogModel = require("../models/blog.model");
-const categoryModel = require("../models/category.model");
+const categoryModel = require("../models/paket.model");
 const UserModel = require("../models/user.model");
 
 const cloudinary = require("../conf/cloudinary");
