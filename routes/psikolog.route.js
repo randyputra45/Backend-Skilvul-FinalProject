@@ -14,10 +14,10 @@ const corsOptions = {
 };
 
 // router
-router.post("/psikolog", cors(corsOptions), PsikologController.createNewPsikolog);
-router.get("/psikolog", cors(corsOptions), PsikologController.getAllPsikolog);
-router.get("/psikolog/:id", cors(corsOptions), PsikologController.getPsikologByID);
-router.put("/psikolog/:id", multer.single("image"), cors(corsOptions), PsikologController.updatePsikolog);
-router.delete("/psikolog/:id", cors(corsOptions), PsikologController.deletePsikolog);
+router.post("/experts", cors(corsOptions), PsikologController.createNewPsikolog);
+router.get("/experts", cors(corsOptions), PsikologController.getAllPsikolog);
+router.get("/experts/:id", cors(corsOptions), PsikologController.getPsikologByID);
+router.put("/experts/:id", multer.single("image"), cors(corsOptions), PsikologController.updatePsikolog);
+router.delete("/experts/:id", cors(corsOptions), PsikologController.deletePsikolog);
 
 module.exports = router;
