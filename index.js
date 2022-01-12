@@ -9,7 +9,7 @@ const db = require("./helpers/db");
 
 const authRoutes = require("./routes/auth.route");
 const blogRoutes = require("./routes/blog.route");
-const categoryRoutes = require("./routes/category.route");
+const paketRoutes = require("./routes/paket.route");
 const psikologRoutes = require("./routes/psikolog.route");
 const userRoutes = require("./routes/user.route");
 const consultationRoutes = require("./routes/consultation.route");
@@ -42,7 +42,7 @@ async function main() {
     app.use(userRoutes);
     app.use(authRoutes);
     app.use(blogRoutes);
-    app.use(categoryRoutes);
+    app.use(paketRoutes);
     app.use(psikologRoutes);
     app.use(consultationRoutes);
     app.use(webinarRoutes);
