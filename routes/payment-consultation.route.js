@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const ConsultationController = require("../controllers/consultation.controller");
+const ConsultationController = require("../controllers/payment-consultation.controller");
 
 const router = express.Router();
 const corsOptions = {
