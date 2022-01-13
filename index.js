@@ -18,6 +18,7 @@ const testRoutes = require("./routes/health-test.route");
 const screeningRoutes = require("./routes/screening.route");
 const paymentRoutes = require("./routes/payment.route");
 const coachingRoutes = require("./routes/coaching.route");
+const dyslexiaRoutes = require("./routes/dyslexia.route");
 
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGO_URI;
@@ -50,6 +51,7 @@ async function main() {
     app.use(screeningRoutes);
     app.use(paymentRoutes);
     app.use(coachingRoutes);
+    app.use(dyslexiaRoutes);
 
     app.use(errorHandler);
 
