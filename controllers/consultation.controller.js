@@ -1,6 +1,7 @@
 const ConsultationModel = require("../models/consultation.model");
 const midtransClient = require('midtrans-client');
 const bcrypt = require("bcrypt");
+const axios = require("axios");
 
 class ConsultationController {
   static async createNewConsultation(req, res) {
@@ -77,6 +78,24 @@ class ConsultationController {
       res.status(500).send({ err: error });
     }
   }
+  
+  static async getPaymentStatus(req, res, next) {
+    const config2 = {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": "Basic U0ItTWlkLXNlcnZlci03MHNpUlFuOGt0Zk1qNVBsM3lvQUpMdWQ6"
+      },
+    };
+
+    try {
+      const res = await axios
+      .get("https://api.sandbox.midtrans.com/v2/e9c413d7-bd64-457f-8fc6-74ca847655e7/status", { config2 })
+      res.status(200).json(data)
+    } catch (error) {
+      res.status(500).send({ err: error });
+    }
+  }
 
   static async postNewPayment(req, res, next) {
     // Create Core API instance
@@ -104,13 +123,21 @@ class ConsultationController {
             "first_name": body.first_name,
             "last_name": body.last_name,
             "email": body.email,
-            "phone": body.phone
-        }
+            "phone": body.phone,
+        },
+        "item_details": [
+          {
+            "name": body.package_name,
+            "price": body.price,
+            "quantity": 1,
+            "merchant_name": "GoCure"
+          },
+        ],
       };
       
       // charge transaction
       core.charge(parameter)
-        .then((chargeResponse)=>{
+        .then(async (chargeResponse) =>{
           console.log('chargeResponse:');
           console.log(chargeResponse);
 
@@ -124,8 +151,11 @@ class ConsultationController {
               payment_details: chargeResponse
             });
 
-            const saved = consul.save();
-            res.status(200).send(saved);
+            const saved = await consul.save();
+            if(saved) {
+              res.status(200).send(saved);
+              console.log(saved)
+            }
           } catch (error) {
             res.status(500).send({ err: error });
           }

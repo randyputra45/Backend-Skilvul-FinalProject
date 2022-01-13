@@ -1,16 +1,23 @@
 const express = require("express");
+const cors = require("cors");
 
 const PaketController = require("../controllers/paket.controller");
+
+const corsOptions = {
+    origin: true, //included origin as true
+    credentials: true, //included credentials as true
+    exposedHeaders: ["set-cookie"],
+};
 
 // creates a new router instance
 const router = express.Router();
 
 // router
 
-router.post("/paket", PaketController.postNewPaket);
-router.get("/paket", PaketController.getAllPaket);
-router.get("/paket/:id", PaketController.getPaketByID);
-router.patch("/paket/:id", PaketController.updatePaket);
-router.delete("/paket/:id", PaketController.deletePaket);
+router.post("/package", cors(), PaketController.postNewPaket);
+router.get("/package", cors(), PaketController.getAllPaket);
+router.get("/package/:id", cors(), PaketController.getPaketByID);
+router.patch("/package/:id", cors(), PaketController.updatePaket);
+router.delete("/package/:id", cors(), PaketController.deletePaket);
 
 module.exports = router;
