@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema
 
-const consultationSchema = new Schema(
+const paymentCoachingSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
@@ -25,14 +25,10 @@ const consultationSchema = new Schema(
     payment_details: {
       type: Object
     },
-    stress_testscore: {
-      type: Number,
-      default: 0
-    }
   },
   { timestamps: true }
 );
 
-const ConsultationSchema = mongoose.model("Consultation", consultationSchema);
+const PaymentCoachingSchema = mongoose.model("PaymentCoaching", paymentCoachingSchema);
 
-module.exports = ConsultationSchema;
+module.exports = PaymentCoachingSchema;

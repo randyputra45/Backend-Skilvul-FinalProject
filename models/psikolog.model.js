@@ -16,7 +16,14 @@ const psikologSchema = new mongoose.Schema(
         },
         pendekatan_terapi: {
             type: [String], 
-        }
+        },
+        image: {
+            type: String
+        },
+        role: {
+            type: String
+        },
+        cloudinaryId: String,
     },
     { timestamps:true }
 );

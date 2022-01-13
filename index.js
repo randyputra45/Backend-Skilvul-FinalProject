@@ -16,7 +16,9 @@ const consultationRoutes = require("./routes/consultation.route");
 const webinarRoutes = require("./routes/webinar.route");
 const testRoutes = require("./routes/health-test.route");
 const screeningRoutes = require("./routes/screening.route");
-const paymentRoutes = require("./routes/payment.route");
+const paymentCoachingRoutes = require("./routes/payment-coaching.route");
+const paymentWebinarRoutes = require("./routes/payment-webinar.route");
+const paymentDyslexiaRoutes = require("./routes/payment-dyslexia.route");
 const coachingRoutes = require("./routes/coaching.route");
 const dyslexiaRoutes = require("./routes/dyslexia.route");
 
@@ -49,9 +51,11 @@ async function main() {
     app.use(webinarRoutes);
     app.use(testRoutes);
     app.use(screeningRoutes);
-    app.use(paymentRoutes);
     app.use(coachingRoutes);
     app.use(dyslexiaRoutes);
+    app.use(paymentCoachingRoutes);
+    app.use(paymentWebinarRoutes);
+    app.use(paymentDyslexiaRoutes);
 
     app.use(errorHandler);
 
