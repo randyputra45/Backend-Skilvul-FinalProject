@@ -65,7 +65,7 @@ class DyslexiaController {
   static async deleteDyslexia(req, res) {
     try {
       const id = req.params.id;
-      await PaketDyslexia.deleteOne({ _id: id });
+      await DyslexiaModel.deleteOne({ _id: id });
       res.status(200).send({ message: `${id} has been deleted` });
     } catch (error) {
       res.status(500).send({ err: error });
