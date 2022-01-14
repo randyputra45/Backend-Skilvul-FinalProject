@@ -12,12 +12,12 @@ const corsOptions = {
 };
 
 // router
-router.post("/webinars",cors(corsOptions),  WebinarController.postNewWebinar);
-router.get("/webinars", cors(corsOptions), WebinarController.getAllWebinar);
-router.get("/webinars/:id", cors(corsOptions), WebinarController.getWebinarByID);
-router.put("/webinars/:id", cors(corsOptions), WebinarController.updateWebinar);
-router.patch("/webinars/like", cors(corsOptions), WebinarController.likeWebinar);
-router.patch("/webinars/unlike", cors(corsOptions), WebinarController.unlikeWebinar);
-router.delete("/webinars/:id", cors(corsOptions), WebinarController.deleteWebinar);
+router.post("/webinars",cors(),  WebinarController.postNewWebinar);
+router.get("/webinars", cors(), WebinarController.getAllWebinar);
+router.get("/webinars/:id", cors(), WebinarController.getWebinarByID);
+router.put("/webinars/:id", cors(), WebinarController.updateWebinar);
+router.patch("/webinars/like", cors(), WebinarController.likeWebinar);
+router.patch("/webinars/unlike", cors(), WebinarController.unlikeWebinar);
+router.delete("/webinars/:id", cors(), WebinarController.deleteWebinar);
 
 module.exports = router;

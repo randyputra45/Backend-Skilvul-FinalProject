@@ -10,10 +10,10 @@ const corsOptions = {
     exposedHeaders: ["set-cookie"],
 };
 
-router.post("/health-test", cors(corsOptions), TestController.createNewTest);
-router.get("/health-test", cors(corsOptions), TestController.getAllTest);
-router.get("/health-test/:id", cors(corsOptions), TestController.getTestByID);
-router.patch("/health-test/:id", cors(corsOptions), TestController.updateTest);
-router.delete("/health-test/:id", cors(corsOptions), TestController.deleteTest);
+router.post("/health-test", cors(), TestController.createNewTest);
+router.get("/health-test", cors(), TestController.getAllTest);
+router.get("/health-test/:id", cors(), TestController.getTestByID);
+router.patch("/health-test/:id", cors(), TestController.updateTest);
+router.delete("/health-test/:id", cors(), TestController.deleteTest);
 
 module.exports = router;

@@ -10,12 +10,12 @@ const corsOptions = {
     exposedHeaders: ["set-cookie"],
 };
 
-router.post("/consultation", cors(corsOptions), ConsultationController.createNewConsultation);
-router.post("/payconsultation", cors(corsOptions), ConsultationController.postNewPayment);
-router.get("/consultation", cors(corsOptions), ConsultationController.getAllConsultation);
+router.post("/consultation", cors(), ConsultationController.createNewConsultation);
+router.post("/payconsultation", cors(), ConsultationController.postNewPayment);
+router.get("/consultation", cors(), ConsultationController.getAllConsultation);
 router.get("/paymentstatus", ConsultationController.getPaymentStatus);
-router.get("/consultation/:id", cors(corsOptions), ConsultationController.getConsultationByID);
-router.patch("/consultation/:id", cors(corsOptions), ConsultationController.updateConsultation);
-router.delete("/consultation/:id", cors(corsOptions), ConsultationController.deleteConsultation);
+router.get("/consultation/:id", cors(), ConsultationController.getConsultationByID);
+router.patch("/consultation/:id", cors(), ConsultationController.updateConsultation);
+router.delete("/consultation/:id", cors(), ConsultationController.deleteConsultation);
 
 module.exports = router;

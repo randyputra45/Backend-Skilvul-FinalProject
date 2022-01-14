@@ -12,8 +12,8 @@ const corsOptions = {
 };
 
 // router
-router.get("/paycoaching/:id", cors(corsOptions), PaymentCoachingController.getCoachingByID);
-router.get("/paycoaching", cors(corsOptions), PaymentCoachingController.getAllCoaching);
-router.post("/paycoaching", cors(corsOptions), PaymentCoachingController.postCoachingPayment);
+router.get("/paycoaching/:id", cors(), PaymentCoachingController.getCoachingByID);
+router.get("/paycoaching", cors(), PaymentCoachingController.getAllCoaching);
+router.post("/paycoaching", cors(), PaymentCoachingController.postCoachingPayment);
 
 module.exports = router;

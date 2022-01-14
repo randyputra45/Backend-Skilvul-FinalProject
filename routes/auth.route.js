@@ -17,9 +17,9 @@ const corsOptions = {
 router.post('/register', cors(corsOptions), AuthController.postRegister);
 router.post('/login', cors(corsOptions), AuthController.postLogin);
 router.get('/verify/:verifyToken', cors(), AuthController.getVerify);
-router.get('/user', cors(corsOptions), AuthController.getCurrentUser);
-router.post('/forgotpassword', cors(corsOptions), AuthController.postForgotPassword);
-router.put('/passwordreset/:resetToken', cors(corsOptions), AuthController.putResetPassword);
-router.get('/logout', cors(corsOptions), AuthController.getLogout);
+router.get('/user', cors(), AuthController.getCurrentUser);
+router.post('/forgotpassword', cors(), AuthController.postForgotPassword);
+router.put('/passwordreset/:resetToken', cors(), AuthController.putResetPassword);
+router.get('/logout', cors(), AuthController.getLogout);
 
 module.exports = router;

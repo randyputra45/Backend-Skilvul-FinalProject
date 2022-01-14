@@ -13,9 +13,9 @@ const corsOptions = {
 };
 
 // router
-router.get("/users", cors(corsOptions), UserController.getAllUser);
-router.get("/users/:id", cors(corsOptions), UserController.getUserByID);
-router.patch("/users/:id", cors(corsOptions), UserController.updateUser);
-router.delete("/users/:id", cors(corsOptions), UserController.deleteUser);
+router.get("/users", cors(), UserController.getAllUser);
+router.get("/users/:id", cors(), UserController.getUserByID);
+router.patch("/users/:id", cors(), UserController.updateUser);
+router.delete("/users/:id", cors(), UserController.deleteUser);
 
 module.exports = router;
