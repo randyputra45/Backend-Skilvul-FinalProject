@@ -246,6 +246,8 @@ const sendToken = (user, statusCode, req, res) => {
   try {
     res.cookie('jwt', token, {
       expires: date,
+      sameSite: 'strict'
+      // httpOnly: true,
     });
   } catch (error) {
     console.log("cookie error")
