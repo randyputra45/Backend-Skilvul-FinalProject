@@ -4,7 +4,7 @@
 
 | Field Name | Type     | Description                                                             |
 | ---------- | -------- | ----------------------------------------------------------------------- |
-| _id        | ObjectId | Article ID is auto generate by MongoDB when admin add article           |
+| \_id       | ObjectId | Article ID is auto generate by MongoDB when admin add article           |
 | title      | string   | The article title                                                       |
 | img        | string   | Image of an article                                                     |
 | desc       | string   | Short description about the article                                     |
@@ -705,13 +705,13 @@ Response :
 
 ## 7. Coaching Collection
 
-| Field Name | Type   | Description                                                          |
-| ---------- | ------ | -------------------------------------------------------------------- |
-| \_id       | int    | Coaching ID is auto generate by MongoDB when admin add profile       |
-| materials  | string | coaching materials                                                   |
-| content    | string | Main content about coaching topic                                    |
-| coach      | string | coach who attending coaching                                         |
-| categories | string | category about coaching topic                                        |
+| Field Name | Type   | Description                                                    |
+| ---------- | ------ | -------------------------------------------------------------- |
+| \_id       | int    | Coaching ID is auto generate by MongoDB when admin add profile |
+| materials  | string | coaching materials                                             |
+| content    | string | Main content about coaching topic                              |
+| coach      | string | coach who attending coaching                                   |
+| categories | string | category about coaching topic                                  |
 
 ### **a. Create Coaching**
 
@@ -847,7 +847,8 @@ Response :
 }
 ```
 
-### **e. Delete coaching
+### \*\*e. Delete coaching
+
 This route is connected to coaching collection of MongoDB. Only **admin** role can delete the coaching via dashboard
 
 Request :
@@ -862,5 +863,760 @@ Response :
 ```json
 {
   "message": "coaching deleted"
+}
+```
+
+## 8. Dyslexia Collection
+
+| Field Name | Type    | Description                                                    |
+| ---------- | ------- | -------------------------------------------------------------- |
+| \_id       | int     | dyslexia ID is auto generate by MongoDB when admin add profile |
+| name       | string  | dyslexia's name                                                |
+| price      | integer | dyslexia's price packet                                        |
+| benefit    | string  | benefit of dyslexia                                            |
+
+### **a. Create Dyslexia**
+
+This route is connected to dyslexia collection of MongoDB. Only **admin** role can add dyslexia video via dashboard
+
+Request :
+
+- Method : POST
+- Endpoint : `/dyslexia`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "name": "string",
+  "price": "integer",
+  "benefit": "string"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "dyslexia added successfully",
+  "data": {
+    "_id": "ObjectId",
+    "name": "string",
+    "price": "integer",
+    "benefit": "string",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  }
+}
+```
+
+### **b. Read All dyslexia**
+
+This route is connected to dyslexia collection of MongoDB. **Admin and member** role can view the dyslexia video by visiting dyslexia page
+
+Request :
+
+- Method : GET
+- Endpoint : `/dyslexia`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "_id": "ObjectId",
+  "_id": "ObjectId",
+  "name": "string",
+  "price": "integer",
+  "benefit": "string",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **c. Read dyslexia by Id**
+
+This route is connected to dyslexia collection of MongoDB. **Admin and member** role can view the dyslexia video by visiting dyslexia page
+
+Request :
+
+- Method : GET
+- Endpoint : `/dyslexia/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{{
+  "_id": "ObjectId",
+  "name": "string",
+  "price": "integer",
+  "benefit": "string",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **d. Update dyslexia profile**
+
+This route is connected to dyslexia collection of MongoDB. Only **admin** role can update the dyslexia via dashboard
+
+Request :
+
+- Method : PATCH
+- Endpoint : `/dyslexia/:id`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "name": "string",
+  "price": "integer",
+  "benefit": "string"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "dyslexia updated successfully",
+  "data": {
+    {
+      "_id": "ObjectId",
+      "name": "string",
+      "price": "integer",
+      "benefit": "string",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  }
+}
+```
+
+### **e. Delete dyslexia**
+
+This route is connected to dyslexia collection of MongoDB. Only **admin** role can delete the dyslexia via dashboard
+
+Request :
+
+- Method : DELETE
+- Endpoint : `/dyslexia/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "message": "dyslexia deleted"
+}
+```
+
+## 9. Health-test Collection
+
+| Field Name | Type   | Description                                                       |
+| ---------- | ------ | ----------------------------------------------------------------- |
+| \_id       | int    | Health-test ID is auto generate by MongoDB when admin add profile |
+| question   | string | Health-test's question                                            |
+| answer     | array  | Health-test's answer                                              |
+
+### **a. Create health-test**
+
+This route is connected to health-test collection of MongoDB. Only **admin** role can add health-test via dashboard
+
+Request :
+
+- Method : POST
+- Endpoint : `/health-test`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "question": "string",
+  "answer": "array"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "Health-test added successfully",
+  "data": {
+    "_id": "ObjectId",
+    "question": "string",
+    "answer": "array",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  }
+}
+```
+
+### **b. Read All Health-test**
+
+This route is connected to health-test collection of MongoDB. **Admin and member** role can view the health-test by visiting health-test page
+
+Request :
+
+- Method : GET
+- Endpoint : `/health-test`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "_id": "ObjectId",
+  "question": "string",
+  "answer": "array",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **c. Read Health-test by Id**
+
+This route is connected to health-test collection of MongoDB. **Admin and member** role can view the health-test video by visiting health-test page
+
+Request :
+
+- Method : GET
+- Endpoint : `/health-test/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{{
+  "_id": "ObjectId",
+  "question": "string",
+  "answer": "array",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **d. Update health-test profile**
+
+This route is connected to health-test collection of MongoDB. Only **admin** role can update the health-test via dashboard
+
+Request :
+
+- Method : PATCH
+- Endpoint : `/health-test/:id`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "question": "string",
+  "answer": "array"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "Health-test updated successfully",
+  "data": {
+    {
+      "_id": "ObjectId",
+      "question": "string",
+      "answer": "array",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  }
+}
+```
+
+### **e. Delete Health-test**
+
+This route is connected to health-test collection of MongoDB. Only **admin** role can delete the health-test via dashboard
+
+Request :
+
+- Method : DELETE
+- Endpoint : `/health-test/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "message": "Health-test deleted"
+}
+```
+
+## 10. Screening Collection
+
+| Field Name | Type   | Description                                                     |
+| ---------- | ------ | --------------------------------------------------------------- |
+| \_id       | int    | Screening ID is auto generate by MongoDB when admin add profile |
+| question   | string | Screening's question                                            |
+| answer     | array  | Screening's answer                                              |
+
+### **a. Create Screening**
+
+This route is connected to screening collection of MongoDB. Only **admin** role can add screening via dashboard
+
+Request :
+
+- Method : POST
+- Endpoint : `/screening`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "question": "string",
+  "answer": "array"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "Screening added successfully",
+  "data": {
+    "_id": "ObjectId",
+    "question": "string",
+    "answer": "array",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  }
+}
+```
+
+### **b. Read All Screening**
+
+This route is connected to screening collection of MongoDB. **Admin and member** role can view the screening by visiting screening page
+
+Request :
+
+- Method : GET
+- Endpoint : `/screening`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "_id": "ObjectId",
+  "question": "string",
+  "answer": "array",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **c. Read Screening by Id**
+
+This route is connected to screening collection of MongoDB. **Admin and member** role can view the screening video by visiting screening page
+
+Request :
+
+- Method : GET
+- Endpoint : `/screening/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{{
+  "_id": "ObjectId",
+  "question": "string",
+  "answer": "array",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **d. Update screening profile**
+
+This route is connected to screening collection of MongoDB. Only **admin** role can update the screening via dashboard
+
+Request :
+
+- Method : PATCH
+- Endpoint : `/screening/:id`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "question": "string",
+  "answer": "array"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "screening updated successfully",
+  "data": {
+    {
+      "_id": "ObjectId",
+      "question": "string",
+      "answer": "array",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  }
+}
+```
+
+### **e. Delete Screening**
+
+This route is connected to screening collection of MongoDB. Only **admin** role can delete the screening via dashboard
+
+Request :
+
+- Method : DELETE
+- Endpoint : `/screening/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "message": "screening deleted"
+}
+```
+
+## 11. Paket Collection
+
+| Field Name | Type    | Description                                                    |
+| ---------- | ------- | -------------------------------------------------------------- |
+| \_id       | int     | paket ID is auto generate by MongoDB when admin add profile |
+| name       | string  | paket's name                                                |
+| price      | integer | paket's price packet                                        |
+| benefit    | string  | benefit of paket                                            |
+
+### **a. Create Paket**
+
+This route is connected to paket collection of MongoDB. Only **admin** role can add paket video via dashboard
+
+Request :
+
+- Method : POST
+- Endpoint : `/paket`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "name": "string",
+  "price": "integer",
+  "benefit": "string"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "paket added successfully",
+  "data": {
+    "_id": "ObjectId",
+    "name": "string",
+    "price": "integer",
+    "benefit": "string",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  }
+}
+```
+
+### **b. Read All paket**
+
+This route is connected to paket collection of MongoDB. **Admin and member** role can view the paket video by visiting paket page
+
+Request :
+
+- Method : GET
+- Endpoint : `/paket`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "_id": "ObjectId",
+  "_id": "ObjectId",
+  "name": "string",
+  "price": "integer",
+  "benefit": "string",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **c. Read paket by Id**
+
+This route is connected to paket collection of MongoDB. **Admin and member** role can view the paket video by visiting paket page
+
+Request :
+
+- Method : GET
+- Endpoint : `/paket/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{{
+  "_id": "ObjectId",
+  "name": "string",
+  "price": "integer",
+  "benefit": "string",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **d. Update paket profile**
+
+This route is connected to paket collection of MongoDB. Only **admin** role can update the paket via dashboard
+
+Request :
+
+- Method : PATCH
+- Endpoint : `/paket/:id`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "name": "string",
+  "price": "integer",
+  "benefit": "string"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "paket updated successfully",
+  "data": {
+    {
+      "_id": "ObjectId",
+      "name": "string",
+      "price": "integer",
+      "benefit": "string",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  }
+}
+```
+
+### **e. Delete paket**
+
+This route is connected to paket collection of MongoDB. Only **admin** role can delete the paket via dashboard
+
+Request :
+
+- Method : DELETE
+- Endpoint : `/paket/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "message": "paket deleted"
+}
+```
+
+## 12. Consultation Collection
+
+| Field Name            | Type    | Description                                                        |
+| --------------------- | ------- | ------------------------------------------------------------------ |
+| \_id                  | int     | consultation ID is auto generate by MongoDB when admin add profile |
+| user                  | string  | user's name                                                        |
+| psikolog              | string  | psikolog's name                                                    |
+| consultation_schedule | date    | schedule of consultation                                           |
+| consultation_paket    | string  | paket of consultation                                              |
+
+### **a. Create Consultation**
+
+This route is connected to consultation collection of MongoDB. Only **admin** role can add consultation video via dashboard
+
+Request :
+
+- Method : POST
+- Endpoint : `/consultation`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "user": "string",
+  "psikolog": "string",
+  "consultation_schedule": "date",
+  "consultation_paket": "string"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "consultation added successfully",
+  "data": {
+    "_id": "ObjectId",
+    "user": "string",
+    "psikolog": "string",
+    "consultation_schedule": "date",
+    "consultation_paket": "string",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  }
+}
+```
+
+### **b. Read All consultation**
+
+This route is connected to consultation collection of MongoDB. **Admin and member** role can view the consultation video by visiting consultation page
+
+Request :
+
+- Method : GET
+- Endpoint : `/consultation`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "_id": "ObjectId",
+  "user": "string",
+  "psikolog": "string",
+  "consultation_schedule": "date",
+  "consultation_paket": "string",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **c. Read consultation by Id**
+
+This route is connected to consultation collection of MongoDB. **Admin and member** role can view the consultation video by visiting consultation page
+
+Request :
+
+- Method : GET
+- Endpoint : `/consultation/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{{
+  "_id": "ObjectId",
+  "user": "string",
+  "psikolog": "string",
+  "consultation_schedule": "date",
+  "consultation_paket": "string",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **d. Update consultation profile**
+
+This route is connected to consultation collection of MongoDB. Only **admin** role can update the consultation via dashboard
+
+Request :
+
+- Method : PATCH
+- Endpoint : `/consultation/:id`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "user": "string",
+  "psikolog": "string",
+  "consultation_schedule": "date",
+  "consultation_paket": "string"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "consultation updated successfully",
+  "data": {
+    {
+      "_id": "ObjectId",
+      "user": "string",
+      "psikolog": "string",
+      "consultation_schedule": "date",
+      "consultation_paket": "string",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  }
+}
+```
+
+### **e. Delete consultation**
+
+This route is connected to consultation collection of MongoDB. Only **admin** role can delete the consultation via dashboard
+
+Request :
+
+- Method : DELETE
+- Endpoint : `/consultation/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "message": "consultation deleted"
 }
 ```
