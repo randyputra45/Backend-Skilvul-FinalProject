@@ -7,16 +7,28 @@ const consultationSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User"
     },
-    psikolog: {
-      type: Schema.Types.ObjectId,
-      ref: "Psikolog"
+    date: {
+      type: String
     },
-    consultation_schedule: {
-      type: String,
+    package_name: {
+      type: String
     },
-    consultation_paket: {
-      type: String,
+    price: {
+      type: Number
     },
+    payment_method: {
+      type: String
+    },
+    payment_status: {
+      type: String
+    },
+    payment_details: {
+      type: Object
+    },
+    stress_testscore: {
+      type: Number,
+      default: 0
+    }
   },
   { timestamps: true }
 );

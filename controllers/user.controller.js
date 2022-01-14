@@ -5,6 +5,7 @@ class UserController {
     try {
       const userList = await UserModel.find().populate({
         path: "liked_blog",
+        model: "Blog"
       });
       res.status(200).send(userList);
     } catch (error) {

@@ -32,6 +32,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    sex: {
+      type: String
+    },
+    birth_date: {
+      type: String
+    },
     liked_blog: [{
       type: Schema.Types.ObjectId,
       ref: "Blog",

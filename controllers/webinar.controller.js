@@ -57,6 +57,9 @@ class WebinarController {
           description: body.description,
           url_webinar: body.url_webinar,
           psikolog: body.psikolog,
+          day: body.day,
+          date: body.date,
+          price: body.price
         }
       );
       res.status(200).send(body);
@@ -185,6 +188,29 @@ class WebinarController {
       });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  static async storage() {
+    try {
+      return multer.diskStorage({
+        destination: function (req, file, cb) {
+          cb(null, "./uploads");
+        },
+        filename: function (req, file, cb) {
+          cb(null, file.originalname);
+        },
+      });
+    } catch (error) {
+      res.status(500).json(err);
+    }
+  }
+
+  static async uploadImage() {
+    try {
+      multer({ storage: storage() }).single("image");
+    } catch (error) {
+      res.status(500).json(err);
     }
   }
 }

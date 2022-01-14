@@ -142,7 +142,10 @@ class AuthController {
       if(req.cookies.jwt){
         const token = req.cookies.jwt;
         const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-        currentUser = await UserModel.findById(decoded.id);
+        currentUser = await UserModel.findById(decoded.id).populate({
+          path: "liked_blog",
+          model: "Blog"
+        });;
       } else {
         currentUser = null;
       }
