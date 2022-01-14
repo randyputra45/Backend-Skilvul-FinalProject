@@ -7,7 +7,6 @@ const DyslexiaController = require("../controllers/dyslexia.controller");
 const router = express.Router();
 
 // router
-
 router.post("/dyslexia", cors(), DyslexiaController.postNewDyslexia);
 router.get("/dyslexia", cors(), DyslexiaController.getAllDyslexia);
 router.get("/dyslexia/:id", cors(), DyslexiaController.getDyslexiaByID);
