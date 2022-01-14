@@ -1,6 +1,6 @@
 # API Spec
 
-## 1. Article Collection
+## 1. Blogs Collection
 
 | Field Name | Type     | Description                                                             |
 | ---------- | -------- | ----------------------------------------------------------------------- |
