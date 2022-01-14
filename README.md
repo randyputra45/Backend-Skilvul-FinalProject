@@ -702,3 +702,165 @@ Response :
   "accessToken": "string"
 }
 ```
+
+## 7. Coaching Collection
+
+| Field Name | Type   | Description                                                          |
+| ---------- | ------ | -------------------------------------------------------------------- |
+| \_id       | int    | Coaching ID is auto generate by MongoDB when admin add profile       |
+| materials  | string | coaching materials                                                   |
+| content    | string | Main content about coaching topic                                    |
+| coach      | string | coach who attending coaching                                         |
+| categories | string | category about coaching topic                                        |
+
+### **a. Create Coaching**
+
+This route is connected to coaching collection of MongoDB. Only **admin** role can add coaching video via dashboard
+
+Request :
+
+- Method : POST
+- Endpoint : `/coaching`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "materials": "string",
+  "content": "string",
+  "coach": "string",
+  "categories": "array"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "coaching added successfully",
+  "data": {
+    "_id": "ObjectId",
+    "materials": "string",
+    "content": "string",
+    "coach": "string",
+    "categories": "array",
+    "create_date": "date",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+  }
+}
+```
+
+### **b. Read All coaching**
+
+This route is connected to coaching collection of MongoDB. **Admin and member** role can view the coaching video by visiting coaching page
+
+Request :
+
+- Method : GET
+- Endpoint : `/coaching`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "_id": "ObjectId",
+  "materials": "string",
+  "content": "string",
+  "coach": "string",
+  "categories": "array",
+  "create_date": "date",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **c. Read Coaching by Id**
+
+This route is connected to coaching collection of MongoDB. **Admin and member** role can view the coaching video by visiting coaching page
+
+Request :
+
+- Method : GET
+- Endpoint : `/coaching/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{{
+  "_id": "ObjectId",
+  "materials": "string",
+  "content": "string",
+  "coach": "string",
+  "categories": "array",
+  "create_date": "date",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
+```
+
+### **d. Update coaching profile**
+
+This route is connected to coaching collection of MongoDB. Only **admin** role can update the coaching via dashboard
+
+Request :
+
+- Method : PATCH
+- Endpoint : `/coaching/:id`
+- Header :
+  - Content-Type: application/json
+  - Accept: application/json
+- Body :
+
+```json
+{
+  "materials": "string",
+  "content": "string",
+  "coach": "string",
+  "categories": "array"
+}
+```
+
+Response :
+
+```json
+{
+  "message": "coaching updated successfully",
+  "data": {
+    {
+      "_id": "ObjectId",
+      "materials": "string",
+      "content": "string",
+      "coach": "string",
+      "categories": "array",
+      "create_date": "date",
+      "createdAt": "Date",
+      "updatedAt": "Date"
+    }
+  }
+}
+```
+
+### **e. Delete coaching
+This route is connected to coaching collection of MongoDB. Only **admin** role can delete the coaching via dashboard
+
+Request :
+
+- Method : DELETE
+- Endpoint : `/coaching/:id`
+- Header :
+  - Accept: application/json
+
+Response :
+
+```json
+{
+  "message": "coaching deleted"
+}
+```
