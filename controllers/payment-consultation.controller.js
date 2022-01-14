@@ -1,4 +1,4 @@
-const ConsultationModel = require("../models/consultation.model");
+const ConsultationModel = require("../models/payment-consultation.model");
 const midtransClient = require('midtrans-client');
 const bcrypt = require("bcrypt");
 const axios = require("axios");

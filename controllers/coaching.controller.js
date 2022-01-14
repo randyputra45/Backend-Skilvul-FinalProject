@@ -1,6 +1,4 @@
 const CoachingModel = require("../models/coaching.model");
-const categoryModel = require("../models/paket.model");
-const userModel = require("../models/user.model");
 
 const cloudinary = require("../conf/cloudinary");
 
