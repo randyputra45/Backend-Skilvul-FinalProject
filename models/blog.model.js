@@ -19,9 +19,15 @@ const blogSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    other_blog: {
+      type: [Schema.Types.ObjectId],
+      ref: "Other Blog"
+    },
     cloudinaryId: String,
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Blog", blogSchema);
+const BlogSchema = mongoose.model("Blog", BlogSchema);
+
+module.exports = BlogSchema;
