@@ -12,8 +12,8 @@ const corsOptions = {
 };
 
 // router
-router.get("/paydyslexia", cors(corsOptions), PaymentDyslexiaController.getAllDyslexia);
-router.get("/paydyslexia/:id", cors(corsOptions), PaymentDyslexiaController.getDyslexiaByID);
-router.post("/paydyslexia", cors(corsOptions), PaymentDyslexiaController.postDyslexiaPayment);
+router.get("/paydyslexia", cors(), PaymentDyslexiaController.getAllDyslexia);
+router.get("/paydyslexia/:id", cors(), PaymentDyslexiaController.getDyslexiaByID);
+router.post("/paydyslexia", cors(), PaymentDyslexiaController.postDyslexiaPayment);
 
 module.exports = router;

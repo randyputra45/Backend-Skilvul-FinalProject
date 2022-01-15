@@ -10,10 +10,10 @@ const corsOptions = {
     exposedHeaders: ["set-cookie"],
 };
 
-router.post("/screening", cors(corsOptions), ScreeningController.createNewScreening);
-router.get("/screening", cors(corsOptions), ScreeningController.getAllScreening);
-router.get("/screening/:id", cors(corsOptions), ScreeningController.getScreeningByID);
-router.patch("/screening/:id", cors(corsOptions), ScreeningController.updateScreening);
-router.delete("/screening/:id", cors(corsOptions), ScreeningController.deleteScreening);
+router.post("/screening", cors(), ScreeningController.createNewScreening);
+router.get("/screening", cors(), ScreeningController.getAllScreening);
+router.get("/screening/:id", cors(), ScreeningController.getScreeningByID);
+router.patch("/screening/:id", cors(), ScreeningController.updateScreening);
+router.delete("/screening/:id", cors(), ScreeningController.deleteScreening);
 
 module.exports = router;

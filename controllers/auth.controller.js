@@ -246,9 +246,8 @@ const sendToken = (user, statusCode, req, res) => {
   try {
     res.cookie('jwt', token, {
       expires: date,
-      httpOnly: true,
-      // secure: req.secure || req.headers['x-forwarded-proto'] === 'https', 
-      // sameSite: 'none'
+      sameSite: 'strict'
+      // httpOnly: true,
     });
   } catch (error) {
     console.log("cookie error")

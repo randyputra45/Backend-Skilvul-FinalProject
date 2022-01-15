@@ -12,8 +12,8 @@ const corsOptions = {
 };
 
 // router
-router.get("/paywebinar", cors(corsOptions), PaymentWebinarController.getAllWebinar);
-router.get("/paywebinar/:id", cors(corsOptions), PaymentWebinarController.getWebinarByID);
-router.post("/paywebinar", cors(corsOptions), PaymentWebinarController.postWebinarPayment);
+router.get("/paywebinar", cors(), PaymentWebinarController.getAllWebinar);
+router.get("/paywebinar/:id", cors(), PaymentWebinarController.getWebinarByID);
+router.post("/paywebinar", cors(), PaymentWebinarController.postWebinarPayment);
 
 module.exports = router;
